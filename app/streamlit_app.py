@@ -272,12 +272,14 @@ def _brand_nav_bar():
         <div class="brand-logo-circle">🧠</div>
         <div>
           <div class="brand-title">Intelligence Designed To Evolve</div>
-          <div class="brand-sub">EEG Fuzzy Cognitive Load Platform</div>
+          <div class="brand-sub">EEG Fuzzy Cognitive Load Research Platform</div>
         </div>
       </div>
-      <a href="http://localhost:8080" target="_self" class="nav-return-btn">
-        ← Video Landing Page
-      </a>
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:#c4c2c3; font-size:12px; font-weight:500; padding:5px 12px; border-radius:999px;">
+          ds007169 • 18 Subjects • 1,046 Windows
+        </span>
+      </div>
     </div>
     """, unsafe_allow_html=True)
 

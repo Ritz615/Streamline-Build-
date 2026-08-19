@@ -203,28 +203,21 @@ data/raw/ds007169/
 
 ---
 
-## Quick Start — Run Merged Application
+## Quick Start — Launch Research Dashboard
 
-### 1. Launch the Complete Unified Application (Landing Page + Research Dashboard)
+### 1. Launch the Application
 ```bash
-# Starts both the Landing Page (port 8080) and Streamlit Dashboard (port 8501)
-python main.py --app
+# Starts the Streamlit Research Dashboard (port 8501)
+python main.py --dashboard
 ```
-- **Landing Page**: [http://localhost:8080](http://localhost:8080)
 - **Research Dashboard**: [http://localhost:8501](http://localhost:8501)
 
-### 2. Launch Individual Components
+### 2. Run Pipeline & Automated Tests
 ```bash
-# Launch Landing Page only (port 8080)
-python main.py --ui
-
-# Launch Streamlit Research Dashboard only (port 8501)
-python main.py --dashboard
-
 # Run complete end-to-end ML & EEG pipeline
 python main.py --all
 
-# Run automated tests
+# Run automated tests (43 passed)
 pytest tests/ -v
 ```
 
@@ -234,19 +227,8 @@ pytest tests/ -v
 
 ```
 eeg-cognitive-load/
-├── index.html                   ← Root Landing Page (Project 1)
-├── styles.css                   ← Exact Landing Page styling
-├── main.js                      ← Count-up & mobile menu logic
-├── assets/logo.webp             ← Circular brand logo
-├── fonts/                       ← Geist Pixel Circle font fallback
-├── web/                         ← Standalone web distribution folder
-│   ├── index.html
-│   ├── styles.css
-│   ├── main.js
-│   ├── assets/logo.webp
-│   └── fonts/GeistPixel-Circle.woff2
 ├── app/
-│   └── streamlit_app.py         ← 7-page research dashboard (Project 2)
+│   └── streamlit_app.py         ← 7-page research dashboard with UI/UX styling
 ├── src/
 │   ├── config.py                ← Configuration loader
 │   ├── database.py              ← SQLite ORM & run history
