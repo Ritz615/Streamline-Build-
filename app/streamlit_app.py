@@ -54,36 +54,36 @@ def _get_config():
 cfg = _get_config()
 
 # ─────────────────────────────────────────────────────────────────────────────
-# DESIGN SYSTEM — Full Professional Dark Theme CSS
+# DESIGN SYSTEM — Professional Light Theme CSS
 # ─────────────────────────────────────────────────────────────────────────────
 DESIGN_CSS = """
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-  /* ── Root tokens ── */
+  /* ── Root tokens — Light Theme ── */
   :root {
-    --bg:            #080810;
-    --surface-1:     rgba(16, 16, 24, 0.95);
-    --surface-2:     rgba(22, 22, 34, 0.80);
-    --surface-3:     rgba(30, 30, 46, 0.60);
-    --border:        rgba(255, 255, 255, 0.08);
-    --border-bright: rgba(255, 255, 255, 0.16);
-    --accent-blue:   #3b82f6;
-    --accent-purple: #8b5cf6;
-    --accent-teal:   #14b8a6;
-    --low-color:     #3b82f6;
-    --mod-color:     #f59e0b;
-    --high-color:    #ef4444;
-    --text-1:        #f0f0f5;
-    --text-2:        #a0a0b8;
-    --text-3:        #60607a;
+    --bg:            #f4f6fb;
+    --surface-1:     #ffffff;
+    --surface-2:     #f8fafc;
+    --surface-3:     #eef2f8;
+    --border:        rgba(99, 102, 241, 0.12);
+    --border-bright: rgba(99, 102, 241, 0.28);
+    --accent-blue:   #4f46e5;
+    --accent-purple: #7c3aed;
+    --accent-teal:   #0d9488;
+    --low-color:     #2563eb;
+    --mod-color:     #d97706;
+    --high-color:    #dc2626;
+    --text-1:        #0f172a;
+    --text-2:        #475569;
+    --text-3:        #94a3b8;
     --radius-sm:     8px;
     --radius-md:     14px;
     --radius-lg:     20px;
     --radius-pill:   999px;
-    --shadow-sm:     0 2px 8px rgba(0,0,0,0.4);
-    --shadow-md:     0 8px 24px rgba(0,0,0,0.5);
-    --shadow-lg:     0 20px 60px rgba(0,0,0,0.6);
+    --shadow-sm:     0 1px 4px rgba(15,23,42,0.08), 0 2px 8px rgba(15,23,42,0.04);
+    --shadow-md:     0 4px 16px rgba(15,23,42,0.10), 0 8px 32px rgba(15,23,42,0.06);
+    --shadow-lg:     0 12px 40px rgba(15,23,42,0.14);
   }
 
   /* ── Global reset ── */
@@ -96,15 +96,16 @@ DESIGN_CSS = """
   .stApp, .main {
     background: var(--bg) !important;
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(59, 82, 246, 0.12) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 70%) !important;
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79, 70, 229, 0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 100%, rgba(124, 58, 237, 0.04) 0%, transparent 70%) !important;
     color: var(--text-1) !important;
   }
 
   /* ── Sidebar ── */
   [data-testid="stSidebar"] {
-    background: var(--surface-1) !important;
-    border-right: 1px solid var(--border) !important;
+    background: #ffffff !important;
+    border-right: 1px solid rgba(99,102,241,0.1) !important;
+    box-shadow: 2px 0 12px rgba(15,23,42,0.05) !important;
   }
   [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p,
   [data-testid="stSidebar"] label,
@@ -158,35 +159,35 @@ DESIGN_CSS = """
   /* ── Primary button ── */
   .stButton > button[kind="primary"],
   .stButton > button {
-    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%) !important;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
     color: #ffffff !important;
     font-weight: 600 !important;
     font-size: 14px !important;
     border: none !important;
     border-radius: var(--radius-pill) !important;
     padding: 10px 28px !important;
-    box-shadow: 0 0 20px rgba(59, 82, 246, 0.3) !important;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35) !important;
     transition: all 0.25s ease !important;
     letter-spacing: 0.01em !important;
   }
   .stButton > button:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 0 32px rgba(59, 82, 246, 0.5) !important;
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5) !important;
   }
 
   /* ── Selectbox / Input ── */
   .stSelectbox > div > div,
   .stTextInput > div > div,
   .stNumberInput > div > div {
-    background: var(--surface-2) !important;
-    border: 1px solid var(--border) !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(99, 102, 241, 0.2) !important;
     border-radius: var(--radius-sm) !important;
     color: var(--text-1) !important;
   }
   .stSelectbox > div > div:focus-within,
   .stTextInput > div > div:focus-within {
     border-color: var(--accent-blue) !important;
-    box-shadow: 0 0 0 3px rgba(59, 82, 246, 0.15) !important;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12) !important;
   }
 
   /* ── Slider ── */
@@ -196,10 +197,11 @@ DESIGN_CSS = """
 
   /* ── Expander ── */
   [data-testid="stExpander"] {
-    background: var(--surface-2) !important;
-    border: 1px solid var(--border) !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(99,102,241,0.12) !important;
     border-radius: var(--radius-md) !important;
     margin: 8px 0 !important;
+    box-shadow: var(--shadow-sm) !important;
   }
   [data-testid="stExpander"] summary {
     color: var(--text-1) !important;
@@ -208,33 +210,33 @@ DESIGN_CSS = """
 
   /* ── Code blocks ── */
   .stCodeBlock, pre, code {
-    background: rgba(0, 0, 0, 0.4) !important;
-    border: 1px solid var(--border) !important;
+    background: #f1f5f9 !important;
+    border: 1px solid rgba(99,102,241,0.12) !important;
     border-radius: var(--radius-sm) !important;
-    color: #7dd3fc !important;
+    color: #4f46e5 !important;
   }
 
   /* ── Download button ── */
   [data-testid="stDownloadButton"] button {
-    background: var(--surface-2) !important;
+    background: #ffffff !important;
     color: var(--text-1) !important;
-    border: 1px solid var(--border-bright) !important;
+    border: 1px solid rgba(79, 70, 229, 0.3) !important;
     border-radius: var(--radius-pill) !important;
     font-weight: 500 !important;
     transition: all 0.2s !important;
   }
   [data-testid="stDownloadButton"] button:hover {
     border-color: var(--accent-blue) !important;
-    background: rgba(59, 82, 246, 0.1) !important;
+    background: rgba(79, 70, 229, 0.06) !important;
   }
 
   /* ── Tabs ── */
   [data-baseweb="tab-list"] {
-    background: var(--surface-2) !important;
+    background: #eef2f8 !important;
     border-radius: var(--radius-md) !important;
     padding: 4px !important;
     gap: 4px !important;
-    border: 1px solid var(--border) !important;
+    border: 1px solid rgba(99,102,241,0.1) !important;
   }
   [data-baseweb="tab"] {
     background: transparent !important;
@@ -244,8 +246,9 @@ DESIGN_CSS = """
     font-size: 13px !important;
   }
   [aria-selected="true"][data-baseweb="tab"] {
-    background: rgba(59, 82, 246, 0.15) !important;
-    color: #93c5fd !important;
+    background: #ffffff !important;
+    color: #4f46e5 !important;
+    box-shadow: 0 1px 4px rgba(15,23,42,0.1) !important;
   }
 
   /* ── Alert/info boxes ── */
@@ -255,23 +258,26 @@ DESIGN_CSS = """
   [data-testid="stSuccess"] {
     border-radius: var(--radius-md) !important;
     border: 1px solid !important;
-    backdrop-filter: blur(8px) !important;
   }
   [data-testid="stInfo"] {
-    background: rgba(59, 130, 246, 0.08) !important;
-    border-color: rgba(59, 130, 246, 0.25) !important;
+    background: #eff6ff !important;
+    border-color: #bfdbfe !important;
+    color: #1e40af !important;
   }
   [data-testid="stWarning"] {
-    background: rgba(245, 158, 11, 0.08) !important;
-    border-color: rgba(245, 158, 11, 0.25) !important;
+    background: #fffbeb !important;
+    border-color: #fde68a !important;
+    color: #92400e !important;
   }
   [data-testid="stError"] {
-    background: rgba(239, 68, 68, 0.08) !important;
-    border-color: rgba(239, 68, 68, 0.25) !important;
+    background: #fef2f2 !important;
+    border-color: #fecaca !important;
+    color: #991b1b !important;
   }
   [data-testid="stSuccess"] {
-    background: rgba(20, 184, 166, 0.08) !important;
-    border-color: rgba(20, 184, 166, 0.25) !important;
+    background: #f0fdfa !important;
+    border-color: #99f6e4 !important;
+    color: #134e4a !important;
   }
 
   /* ── Horizontal rule ── */
@@ -282,10 +288,10 @@ DESIGN_CSS = """
   }
 
   /* ── Page title ── */
-  h1 { color: var(--text-1) !important; font-weight: 800 !important; letter-spacing: -0.03em !important; }
-  h2 { color: var(--text-1) !important; font-weight: 700 !important; letter-spacing: -0.02em !important; }
-  h3 { color: var(--text-2) !important; font-weight: 600 !important; }
-  p, li { color: var(--text-2) !important; line-height: 1.7 !important; }
+  h1 { color: #0f172a !important; font-weight: 800 !important; letter-spacing: -0.03em !important; }
+  h2 { color: #1e293b !important; font-weight: 700 !important; letter-spacing: -0.02em !important; }
+  h3 { color: #334155 !important; font-weight: 600 !important; }
+  p, li { color: #475569 !important; line-height: 1.7 !important; }
 
   /* ── Custom cards ── */
   .kpi-card {
@@ -335,13 +341,12 @@ DESIGN_CSS = """
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(12, 12, 20, 0.8);
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border: 1px solid rgba(79, 70, 229, 0.12);
     border-radius: var(--radius-lg);
     padding: 12px 24px;
     margin-bottom: 28px;
-    backdrop-filter: blur(16px);
-    box-shadow: var(--shadow-sm);
+    box-shadow: 0 1px 6px rgba(15,23,42,0.06), 0 4px 16px rgba(15,23,42,0.04);
   }
   .app-header-brand {
     display: flex;
@@ -359,12 +364,12 @@ DESIGN_CSS = """
   .app-header-title {
     font-size: 15px;
     font-weight: 700;
-    color: var(--text-1);
+    color: #0f172a;
     letter-spacing: -0.01em;
   }
   .app-header-sub {
     font-size: 11px;
-    color: var(--text-3);
+    color: #94a3b8;
     font-weight: 400;
     margin-top: 2px;
   }
@@ -372,9 +377,9 @@ DESIGN_CSS = """
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(20, 184, 166, 0.1);
-    border: 1px solid rgba(20, 184, 166, 0.25);
-    color: #5eead4;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
     font-size: 12px;
     font-weight: 600;
     padding: 6px 14px;
@@ -384,8 +389,8 @@ DESIGN_CSS = """
     content: '';
     width: 7px; height: 7px;
     border-radius: 50%;
-    background: #14b8a6;
-    box-shadow: 0 0 8px #14b8a6;
+    background: #22c55e;
+    box-shadow: 0 0 6px #22c55e;
     animation: pulse-dot 1.8s infinite;
   }
   @keyframes pulse-dot {
@@ -403,15 +408,15 @@ DESIGN_CSS = """
   .section-header-icon {
     width: 32px; height: 32px;
     border-radius: 8px;
-    background: rgba(59, 82, 246, 0.15);
-    border: 1px solid rgba(59, 82, 246, 0.25);
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
     display: flex; align-items: center; justify-content: center;
     font-size: 15px;
   }
   .section-header-text {
     font-size: 16px;
     font-weight: 700;
-    color: var(--text-1);
+    color: #0f172a;
     letter-spacing: -0.01em;
   }
 
@@ -436,32 +441,32 @@ DESIGN_CSS = """
     opacity: 0.06;
     background: currentColor;
   }
-  .pred-LOW      { color: #60a5fa; border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08); }
-  .pred-MODERATE { color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.08); }
-  .pred-HIGH     { color: #f87171; border-color: rgba(239, 68, 68, 0.4);  background: rgba(239, 68, 68, 0.08); }
+  .pred-LOW      { color: #1d4ed8; border-color: #bfdbfe; background: #eff6ff; }
+  .pred-MODERATE { color: #b45309; border-color: #fde68a; background: #fffbeb; }
+  .pred-HIGH     { color: #b91c1c; border-color: #fecaca; background: #fef2f2; }
 
   /* ── Pipeline status ── */
   .status-item {
     display: flex; align-items: center; gap: 10px;
     padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px; color: var(--text-2);
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px; color: #475569;
   }
   .status-dot-ok   { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
-  .status-dot-fail { width: 8px; height: 8px; border-radius: 50%; background: var(--high-color); flex-shrink: 0; }
+  .status-dot-fail { width: 8px; height: 8px; border-radius: 50%; background: #ef4444; flex-shrink: 0; }
 
   /* ── Divider ── */
-  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .divider { height: 1px; background: #e2e8f0; margin: 24px 0; }
 
   /* ── Disclaimer ── */
   .disclaimer-banner {
-    background: rgba(245, 158, 11, 0.06);
-    border: 1px solid rgba(245, 158, 11, 0.2);
+    background: #fffbeb;
+    border: 1px solid #fde68a;
     border-left: 3px solid #f59e0b;
     padding: 12px 18px;
     border-radius: var(--radius-sm);
     font-size: 12.5px;
-    color: var(--text-2);
+    color: #78350f;
     margin-bottom: 20px;
   }
 
@@ -469,27 +474,27 @@ DESIGN_CSS = """
   .rule-row {
     display: flex; align-items: flex-start; gap: 12px;
     padding: 12px 16px;
-    background: var(--surface-3);
-    border: 1px solid var(--border);
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
     border-radius: var(--radius-sm);
     margin-bottom: 6px;
     font-size: 13px;
-    color: var(--text-2);
+    color: #475569;
   }
   .rule-num {
-    font-size: 10px; font-weight: 700; color: var(--text-3);
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--border);
+    font-size: 10px; font-weight: 700; color: #64748b;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
     padding: 3px 8px; border-radius: 4px;
     white-space: nowrap; flex-shrink: 0;
   }
-  .rule-badge-low      { background: rgba(59,130,246,0.15); color: #60a5fa; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
-  .rule-badge-moderate { background: rgba(245,158,11,0.15); color: #fbbf24; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
-  .rule-badge-high     { background: rgba(239,68,68,0.15);  color: #f87171; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+  .rule-badge-low      { background: #dbeafe; color: #1d4ed8; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+  .rule-badge-moderate { background: #fef3c7; color: #b45309; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+  .rule-badge-high     { background: #fee2e2; color: #b91c1c; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
 
   /* ── Probability bar ── */
   .prob-track {
-    background: var(--surface-3);
+    background: #e2e8f0;
     border-radius: var(--radius-pill);
     height: 8px;
     overflow: hidden;
@@ -501,8 +506,8 @@ DESIGN_CSS = """
 
   /* ── Membership bar ── */
   .mem-row { margin-bottom: 12px; }
-  .mem-label { font-size: 12px; color: var(--text-2); margin-bottom: 4px; display: flex; justify-content: space-between; }
-  .mem-track { height: 6px; background: var(--surface-3); border-radius: 3px; }
+  .mem-label { font-size: 12px; color: #475569; margin-bottom: 4px; display: flex; justify-content: space-between; }
+  .mem-track { height: 6px; background: #e2e8f0; border-radius: 3px; }
   .mem-fill { height: 100%; border-radius: 3px; }
 
   /* ── History table search row ── */
@@ -516,46 +521,47 @@ DESIGN_CSS = """
 st.markdown(DESIGN_CSS, unsafe_allow_html=True)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# PLOTLY DARK THEME — consistent with design tokens
+# PLOTLY LIGHT THEME — consistent with design tokens
 # ─────────────────────────────────────────────────────────────────────────────
 PLOTLY_LAYOUT = dict(
-    paper_bgcolor="rgba(16,16,24,0.95)",
-    plot_bgcolor="rgba(22,22,34,0.0)",
-    font=dict(family="Inter, system-ui, sans-serif", color="#a0a0b8", size=12),
-    title_font=dict(color="#f0f0f5", size=15, family="Inter"),
+    paper_bgcolor="#ffffff",
+    plot_bgcolor="#f8fafc",
+    font=dict(family="Inter, system-ui, sans-serif", color="#475569", size=12),
+    title_font=dict(color="#0f172a", size=15, family="Inter"),
     xaxis=dict(
-        gridcolor="rgba(255,255,255,0.05)",
-        linecolor="rgba(255,255,255,0.08)",
-        tickcolor="rgba(255,255,255,0.12)",
-        zerolinecolor="rgba(255,255,255,0.06)",
+        gridcolor="#e2e8f0",
+        linecolor="#cbd5e1",
+        tickcolor="#94a3b8",
+        zerolinecolor="#e2e8f0",
     ),
     yaxis=dict(
-        gridcolor="rgba(255,255,255,0.05)",
-        linecolor="rgba(255,255,255,0.08)",
-        tickcolor="rgba(255,255,255,0.12)",
-        zerolinecolor="rgba(255,255,255,0.06)",
+        gridcolor="#e2e8f0",
+        linecolor="#cbd5e1",
+        tickcolor="#94a3b8",
+        zerolinecolor="#e2e8f0",
     ),
-    legend=dict(bgcolor="rgba(0,0,0,0)", bordercolor="rgba(255,255,255,0.1)", borderwidth=1),
+    legend=dict(bgcolor="rgba(255,255,255,0)", bordercolor="#e2e8f0", borderwidth=1),
     margin=dict(l=48, r=24, t=48, b=40),
     hoverlabel=dict(
-        bgcolor="rgba(16,16,24,0.95)",
-        bordercolor="rgba(255,255,255,0.15)",
-        font_color="#f0f0f5",
+        bgcolor="#ffffff",
+        bordercolor="#c7d2fe",
+        font_color="#0f172a",
     ),
 )
 CLASS_COLORS = {"LOW": "#3b82f6", "MODERATE": "#f59e0b", "HIGH": "#ef4444"}
 
-# Apply dark background to matplotlib too
+# Apply light theme to matplotlib (all values must be valid matplotlib hex/named colors)
 plt.rcParams.update({
-    "figure.facecolor": "#0c0c18",
-    "axes.facecolor": "#0c0c18",
-    "axes.edgecolor": "rgba(255,255,255,0.1)",
-    "text.color": "#a0a0b8",
-    "axes.labelcolor": "#a0a0b8",
-    "xtick.color": "#606070",
-    "ytick.color": "#606070",
-    "grid.color": "rgba(255,255,255,0.05)",
-    "axes.titlecolor": "#f0f0f5",
+    "figure.facecolor": "#ffffff",
+    "axes.facecolor":   "#f8fafc",
+    "axes.edgecolor":   "#cbd5e1",
+    "text.color":       "#475569",
+    "axes.labelcolor":  "#475569",
+    "xtick.color":      "#94a3b8",
+    "ytick.color":      "#94a3b8",
+    "grid.color":       "#e2e8f0",
+    "axes.titlecolor":  "#0f172a",
+    "grid.alpha":       0.7,
 })
 
 
