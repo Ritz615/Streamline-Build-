@@ -144,7 +144,7 @@
         </div>
       </main>
 
-      <!-- 3) Stats Footer -->
+    <!-- 3) Stats Footer -->
       <footer class="stats" aria-label="Platform Key Metrics">
         <div class="stat-item anim" style="--d: 0.5s">
           <span class="stat-icon" aria-hidden="true">&lt;</span>
@@ -186,6 +186,87 @@
           </div>
         </div>
       </footer>
+    </div>
+
+    <!-- Interactive Live Inference Modal -->
+    <div id="inference-modal" class="inference-modal" hidden>
+      <div class="modal-backdrop" id="modal-backdrop"></div>
+      <div class="modal-card">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <span class="badge-dot-matrix">LIVE INFERENCE</span>
+            <h2>Fuzzy Cognitive Load Simulator</h2>
+          </div>
+          <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="presets-row">
+            <span class="presets-label">Workload Presets:</span>
+            <button type="button" class="preset-btn" data-alpha="0.45" data-tar="0.70" data-bar="0.80" data-ent="0.75">Relaxed (LOW)</button>
+            <button type="button" class="preset-btn active" data-alpha="0.28" data-tar="1.40" data-bar="1.30" data-ent="1.15">Task Active (MOD)</button>
+            <button type="button" class="preset-btn" data-alpha="0.10" data-tar="2.60" data-bar="2.30" data-ent="1.70">High Stress (HIGH)</button>
+          </div>
+
+          <div class="sliders-grid">
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-alpha">Alpha Relative Power</label>
+                <span class="slider-val" id="val-alpha">0.28</span>
+              </div>
+              <input type="range" id="slider-alpha" min="0.05" max="0.60" step="0.01" value="0.28" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-tar">Theta / Alpha Ratio (TAR)</label>
+                <span class="slider-val" id="val-tar">1.40</span>
+              </div>
+              <input type="range" id="slider-tar" min="0.20" max="3.50" step="0.05" value="1.40" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-bar">Beta / Alpha Ratio (BAR)</label>
+                <span class="slider-val" id="val-bar">1.30</span>
+              </div>
+              <input type="range" id="slider-bar" min="0.20" max="3.50" step="0.05" value="1.30" />
+            </div>
+
+            <div class="slider-group">
+              <div class="slider-label-row">
+                <label for="slider-ent">Spectral Entropy</label>
+                <span class="slider-val" id="val-ent">1.15</span>
+              </div>
+              <input type="range" id="slider-ent" min="0.40" max="2.20" step="0.02" value="1.15" />
+            </div>
+          </div>
+
+          <!-- Real-Time Fuzzy Inference Output Card -->
+          <div class="prediction-output-card" id="pred-card">
+            <div class="pred-header-row">
+              <div>
+                <div class="pred-sub">Classified Cognitive Load</div>
+                <div class="pred-class" id="pred-class-text">MODERATE</div>
+              </div>
+              <div class="pred-metric-pill">
+                <span id="pred-score-text">Score: 51.4 / 100</span>
+                <span class="pred-conf" id="pred-conf-text">Confidence: 88.5%</span>
+              </div>
+            </div>
+            <div class="pred-rule-box">
+              <i class="fa-solid fa-code-fork"></i>
+              <span id="pred-rule-text">Fired Rule: IF Alpha is Medium AND Theta/Alpha is Medium THEN Workload is MODERATE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <a href="http://localhost:8501" class="full-dashboard-btn" target="_blank">
+            Open Full 6-Page Research Dashboard ↗
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- Main JS -->

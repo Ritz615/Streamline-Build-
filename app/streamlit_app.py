@@ -54,38 +54,156 @@ def _get_config():
 
 cfg = _get_config()
 
-# ── custom CSS ────────────────────────────────────────────────────────────
+# ── custom CSS matching Landing Page UI/UX ──────────────────────────────────
 st.markdown("""
 <style>
-  /* metric cards */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  @import url('https://db.onlinewebfonts.com/c/8cb707a9b8a73f8a7403336b861c3074?family=BubbledotICG-FinePos');
+
+  :root {
+    --bg-dark: #0a0a0c;
+    --card-bg: rgba(25, 25, 28, 0.7);
+    --border-color: rgba(255, 255, 255, 0.12);
+    --text-primary: #ffffff;
+    --text-secondary: #c4c2c3;
+    --text-muted: #8e8e8e;
+  }
+
+  html, body, [class*="css"] {
+    font-family: 'Inter', system-ui, sans-serif !important;
+  }
+
+  /* Main background & glass container */
+  .main, .stApp {
+    background-color: #000000 !important;
+    background-image: radial-gradient(circle at 50% 0%, rgba(35, 35, 45, 0.5) 0%, rgba(0, 0, 0, 0.95) 100%) !important;
+    color: #ffffff !important;
+  }
+
+  /* Top Navigation Bar */
+  .brand-nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(24, 24, 28, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 999px;
+    padding: 8px 18px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .brand-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-logo-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #000000;
+    font-size: 14px;
+  }
+
+  .brand-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #ffffff;
+  }
+
+  .brand-sub {
+    font-size: 11px;
+    color: #8e8e8e;
+    font-family: 'BubbledotICG-FinePos', monospace;
+  }
+
+  .nav-return-btn {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff;
+    color: #000000 !important;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 0 14px rgba(255,255,255,0.25);
+  }
+
+  .nav-return-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  }
+
+  /* Metric cards */
   [data-testid="metric-container"] {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 10px;
-      padding: 12px 16px;
+    background: rgba(22, 22, 26, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 14px !important;
+    padding: 16px 18px !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3) !important;
   }
-  /* prediction box */
+
+  /* Prediction box */
   .pred-box {
-      padding: 24px;
-      border-radius: 14px;
-      text-align: center;
-      font-size: 2.4rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      margin: 16px 0;
+    padding: 24px;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 18px 0;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.4);
   }
-  .pred-LOW      { background: #1a4e6e; color: #7ecef4; border: 2px solid #2E86AB; }
-  .pred-MODERATE { background: #6e5010; color: #f6d86d; border: 2px solid #F6AE2D; }
-  .pred-HIGH     { background: #6e1a1a; color: #f47a80; border: 2px solid #E84855; }
-  /* disclaimer banner */
+  .pred-LOW      { background: rgba(26, 78, 110, 0.4); color: #7ecef4; border: 2px solid #2E86AB; }
+  .pred-MODERATE { background: rgba(110, 80, 16, 0.4); color: #f6d86d; border: 2px solid #F6AE2D; }
+  .pred-HIGH     { background: rgba(110, 26, 26, 0.4); color: #f47a80; border: 2px solid #E84855; }
+
+  /* Disclaimer banner */
   .disclaimer {
-      background: rgba(255, 165, 0, 0.15);
-      border-left: 4px solid orange;
-      padding: 10px 16px;
-      border-radius: 6px;
-      font-size: 0.85rem;
+    background: rgba(255, 165, 0, 0.08);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    border-left: 4px solid #ff9800;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #f0f0f0;
   }
-  /* sidebar separator */
+
+  /* Sidebar */
+  [data-testid="stSidebar"] {
+    background-color: #0d0d10 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Buttons */
+  .stButton > button {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+    border-radius: 999px !important;
+    border: none !important;
+    padding: 8px 24px !important;
+    box-shadow: 0 0 16px rgba(255,255,255,0.2) !important;
+    transition: all 0.2s ease !important;
+  }
+  .stButton > button:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 0 24px rgba(255,255,255,0.4) !important;
+  }
+
+  /* Sidebar separator */
   hr { border-color: rgba(255,255,255,0.1); }
 </style>
 """, unsafe_allow_html=True)
@@ -147,7 +265,24 @@ def _data_status():
 def _status_icon(ok: bool) -> str:
     return "✅" if ok else "❌"
 
+def _brand_nav_bar():
+    st.markdown("""
+    <div class="brand-nav-bar">
+      <div class="brand-logo-wrap">
+        <div class="brand-logo-circle">🧠</div>
+        <div>
+          <div class="brand-title">Intelligence Designed To Evolve</div>
+          <div class="brand-sub">EEG Fuzzy Cognitive Load Platform</div>
+        </div>
+      </div>
+      <a href="http://localhost:8080" target="_self" class="nav-return-btn">
+        ← Video Landing Page
+      </a>
+    </div>
+    """, unsafe_allow_html=True)
+
 def _disclaimer_banner():
+    _brand_nav_bar()
     st.markdown(
         '<div class="disclaimer">⚠️ <strong>Research Prototype Only.</strong> '
         'This dashboard is for academic demonstration. It is <strong>NOT</strong> a medical device, '

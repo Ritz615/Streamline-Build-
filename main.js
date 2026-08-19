@@ -159,3 +159,137 @@ function initNavLinks() {
     });
   });
 }
+
+/* --------------------------------------------------------------------------
+   Live Fuzzy Cognitive Load Inference Simulator
+   -------------------------------------------------------------------------- */
+function initInferenceModal() {
+  const modal = document.getElementById("inference-modal");
+  const backdrop = document.getElementById("modal-backdrop");
+  const closeBtn = document.getElementById("modal-close-btn");
+  const ctaBtn = document.querySelector(".cta-btn");
+
+  if (!modal) return;
+
+  function openModal() {
+    modal.removeAttribute("hidden");
+    document.body.classList.add("menu-open");
+    runInference();
+  }
+
+  function closeModal() {
+    modal.setAttribute("hidden", "");
+    document.body.classList.remove("menu-open");
+  }
+
+  // Open modal on CTA click or product click
+  if (ctaBtn) {
+    ctaBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openModal();
+    });
+  }
+
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (backdrop) backdrop.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.hasAttribute("hidden")) {
+      closeModal();
+    }
+  });
+
+  // Inputs
+  const sAlpha = document.getElementById("slider-alpha");
+  const sTar = document.getElementById("slider-tar");
+  const sBar = document.getElementById("slider-bar");
+  const sEnt = document.getElementById("slider-ent");
+
+  const vAlpha = document.getElementById("val-alpha");
+  const vTar = document.getElementById("val-tar");
+  const vBar = document.getElementById("val-bar");
+  const vEnt = document.getElementById("val-ent");
+
+  const predCard = document.getElementById("pred-card");
+  const predClass = document.getElementById("pred-class-text");
+  const predScore = document.getElementById("pred-score-text");
+  const predConf = document.getElementById("pred-conf-text");
+  const predRule = document.getElementById("pred-rule-text");
+
+  function runInference() {
+    const alpha = parseFloat(sAlpha.value);
+    const tar = parseFloat(sTar.value);
+    const bar = parseFloat(sBar.value);
+    const ent = parseFloat(sEnt.value);
+
+    vAlpha.textContent = alpha.toFixed(2);
+    vTar.textContent = tar.toFixed(2);
+    vBar.textContent = bar.toFixed(2);
+    vEnt.textContent = ent.toFixed(2);
+
+    // Triangular membership function helper
+    const trimf = (x, a, b, c) => Math.max(0, Math.min((x - a) / (b - a || 0.001), (c - x) / (c - b || 0.001)));
+
+    // Membership values
+    const alphaLow = trimf(alpha, 0.05, 0.12, 0.22);
+    const alphaMed = trimf(alpha, 0.18, 0.28, 0.38);
+    const alphaHigh = trimf(alpha, 0.32, 0.45, 0.60);
+
+    const tarLow = trimf(tar, 0.2, 0.7, 1.2);
+    const tarMed = trimf(tar, 1.0, 1.5, 2.0);
+    const tarHigh = trimf(tar, 1.8, 2.6, 3.5);
+
+    // Workload score aggregation
+    const lowWeight = Math.max(alphaHigh, tarLow);
+    const medWeight = Math.max(alphaMed, tarMed);
+    const highWeight = Math.max(alphaLow, tarHigh);
+
+    const sumWeights = lowWeight + medWeight + highWeight || 1;
+    const score = ((lowWeight * 20) + (medWeight * 50) + (highWeight * 85)) / sumWeights;
+
+    let cls = "MODERATE";
+    let ruleText = "IF Alpha is Medium AND Theta/Alpha is Medium THEN Workload is MODERATE";
+    let conf = Math.max(0.65, Math.min(0.95, (Math.max(lowWeight, medWeight, highWeight) / sumWeights) * 0.95));
+
+    if (score < 36) {
+      cls = "LOW";
+      ruleText = "IF Alpha is High (Synchronized) AND Theta/Alpha is Low THEN Workload is LOW";
+    } else if (score > 64) {
+      cls = "HIGH";
+      ruleText = "IF Alpha is Low (Suppressed) AND Theta/Alpha is High THEN Workload is HIGH";
+    }
+
+    predClass.textContent = cls;
+    predScore.textContent = `Score: ${score.toFixed(1)} / 100`;
+    predConf.textContent = `Confidence: ${(conf * 100).toFixed(1)}%`;
+    predRule.textContent = ruleText;
+
+    predCard.className = `prediction-output-card class-${cls}`;
+  }
+
+  [sAlpha, sTar, sBar, sEnt].forEach((slider) => {
+    if (slider) slider.addEventListener("input", runInference);
+  });
+
+  // Presets
+  const presetBtns = document.querySelectorAll(".preset-btn");
+  presetBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      presetBtns.forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      sAlpha.value = btn.dataset.alpha;
+      sTar.value = btn.dataset.tar;
+      sBar.value = btn.dataset.bar;
+      sEnt.value = btn.dataset.ent;
+
+      runInference();
+    });
+  });
+}
+
+// Ensure initInferenceModal is called on DOM load
+document.addEventListener("DOMContentLoaded", () => {
+  initInferenceModal();
+});
+
