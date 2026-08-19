@@ -915,20 +915,25 @@ elif page == "📊 EEG Analysis":
                         customdata=sig,
                     ))
 
-                fig_wv.update_layout(
-                    **PLOTLY_LAYOUT,
-                    title=f"{sub_id} — EEG Waveforms ({start_s:.1f}–{end_s:.1f} s)",
-                    xaxis_title="Time (s)",
-                    yaxis=dict(
-                        **PLOTLY_LAYOUT["yaxis"],
+                # Build layout: merge PLOTLY_LAYOUT but override yaxis separately
+                wv_layout = {k: v for k, v in PLOTLY_LAYOUT.items() if k != "yaxis"}
+                wv_layout.update({
+                    "title": f"{sub_id} \u2014 EEG Waveforms ({start_s:.1f}\u2013{end_s:.1f} s)",
+                    "xaxis_title": "Time (s)",
+                    "yaxis": dict(
+                        gridcolor="#e2e8f0",
+                        linecolor="#cbd5e1",
+                        tickcolor="#94a3b8",
+                        zerolinecolor="#e2e8f0",
                         tickvals=[(len(channels) - 1 - i) * offset_scale for i in range(len(channels))],
                         ticktext=channels,
                         showgrid=False,
                         zeroline=False,
                     ),
-                    height=420,
-                    showlegend=False,
-                )
+                    "height": 420,
+                    "showlegend": False,
+                })
+                fig_wv.update_layout(**wv_layout)
                 st.plotly_chart(fig_wv, use_container_width=True)
             except ImportError:
                 from src.visualization import plot_eeg_waveform
