@@ -58,16 +58,16 @@ cfg = _get_config()
 # ─────────────────────────────────────────────────────────────────────────────
 DESIGN_CSS = """
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-  /* ── Root tokens — Light Theme ── */
+  /* ── Root tokens — Premium Light Theme ── */
   :root {
-    --bg:            #f4f6fb;
+    --bg:            #eef1f8;
     --surface-1:     #ffffff;
-    --surface-2:     #f8fafc;
-    --surface-3:     #eef2f8;
-    --border:        rgba(99, 102, 241, 0.12);
-    --border-bright: rgba(99, 102, 241, 0.28);
+    --surface-2:     #f7f9fc;
+    --surface-3:     #edf0f8;
+    --border:        rgba(79, 70, 229, 0.13);
+    --border-bright: rgba(79, 70, 229, 0.30);
     --accent-blue:   #4f46e5;
     --accent-purple: #7c3aed;
     --accent-teal:   #0d9488;
@@ -75,15 +75,15 @@ DESIGN_CSS = """
     --mod-color:     #d97706;
     --high-color:    #dc2626;
     --text-1:        #0f172a;
-    --text-2:        #475569;
-    --text-3:        #94a3b8;
-    --radius-sm:     8px;
-    --radius-md:     14px;
-    --radius-lg:     20px;
+    --text-2:        #374151;
+    --text-3:        #9ca3af;
+    --radius-sm:     10px;
+    --radius-md:     16px;
+    --radius-lg:     24px;
     --radius-pill:   999px;
-    --shadow-sm:     0 1px 4px rgba(15,23,42,0.08), 0 2px 8px rgba(15,23,42,0.04);
-    --shadow-md:     0 4px 16px rgba(15,23,42,0.10), 0 8px 32px rgba(15,23,42,0.06);
-    --shadow-lg:     0 12px 40px rgba(15,23,42,0.14);
+    --shadow-sm:     0 1px 3px rgba(15,23,42,0.05), 0 4px 14px rgba(79,70,229,0.06);
+    --shadow-md:     0 4px 24px rgba(15,23,42,0.08), 0 12px 40px rgba(79,70,229,0.08);
+    --shadow-lg:     0 16px 56px rgba(15,23,42,0.12), 0 4px 16px rgba(79,70,229,0.10);
   }
 
   /* ── Global reset ── */
@@ -650,9 +650,11 @@ def _plotly_apply(fig):
 # ─────────────────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.markdown("""
-    <div style="padding: 8px 0 20px;">
-      <div style="font-size:20px; font-weight:800; color:#f0f0f5; letter-spacing:-0.02em;">EEG Cognitive Load</div>
-      <div style="font-size:11px; color:#60607a; margin-top:4px;">Research Dashboard · v1.0</div>
+    <div style="padding:6px 0 18px; border-bottom:2px solid #e0e4ef; margin-bottom:14px;">
+      <div style="font-size:16px; font-weight:900; letter-spacing:-0.02em;">
+        <span style="background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">EEG Cognitive Load</span>
+      </div>
+      <div style="font-size:10px; font-weight:600; color:#94a3b8; margin-top:4px; letter-spacing:0.06em; text-transform:uppercase;">Research Dashboard &middot; v1.0</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -670,34 +672,38 @@ with st.sidebar:
         label_visibility="collapsed",
     )
 
-    st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:1px;background:#e0e4ef;margin:12px 0;'></div>", unsafe_allow_html=True)
 
     status = _data_status()
-    st.markdown("<div style='font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:#60607a; margin-bottom:10px;'>Pipeline Status</div>", unsafe_allow_html=True)
+    st.markdown("<div style='font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#9ca3af; margin-bottom:10px;'>Pipeline Status</div>", unsafe_allow_html=True)
 
     status_items = [
         ("dataset", "Dataset"),
         ("preprocessed", "Preprocessed EEG"),
-        ("features", "Feature Extraction"),
-        ("fuzzy_model", "Fuzzy Classifier"),
+        ("features", "Features"),
+        ("fuzzy_model", "Fuzzy Model"),
         ("rf_model", "Random Forest"),
-        ("results", "Evaluation Results"),
+        ("results", "Results"),
     ]
     for key, label in status_items:
         dot_cls = "status-dot-ok" if status[key] else "status-dot-fail"
+        badge_color = "#dcfce7" if status[key] else "#fee2e2"
+        badge_text_color = "#166534" if status[key] else "#991b1b"
+        badge_text = "Ready" if status[key] else "Missing"
         st.markdown(f"""
         <div class="status-item">
           <div class="{dot_cls}"></div>
-          <span>{label}</span>
+          <span style='flex:1;font-weight:500;color:#374151;'>{label}</span>
+          <span style='font-size:10px;font-weight:700;background:{badge_color};color:{badge_text_color};padding:2px 7px;border-radius:999px;'>{badge_text}</span>
         </div>
         """, unsafe_allow_html=True)
 
-    st.markdown("<div class='divider'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:1px;background:#e0e4ef;margin:12px 0;'></div>", unsafe_allow_html=True)
     st.markdown("""
-    <div style='font-size:11px; color:#60607a; line-height:1.7;'>
-      Dataset: <strong style='color:#a0a0b8;'>ds007169</strong><br>
-      Source: OpenNeuro.org<br>
-      License: CC0 (Public Domain)
+    <div style='font-size:11px; color:#9ca3af; line-height:1.9;'>
+      <b style='color:#64748b;'>Dataset</b> &nbsp;ds007169<br>
+      <b style='color:#64748b;'>Source</b> &nbsp;OpenNeuro.org<br>
+      <b style='color:#64748b;'>License</b> &nbsp;CC0 Public Domain
     </div>
     """, unsafe_allow_html=True)
 
@@ -857,12 +863,11 @@ elif page == "📊 EEG Analysis":
     ctrl_col, viz_col = st.columns([1, 3], gap="medium")
 
     with ctrl_col:
-        st.markdown("<div class='kpi-card' style='margin-bottom:12px;'>", unsafe_allow_html=True)
+        st.markdown("<p style='font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#9ca3af;margin-bottom:8px;'>Controls</p>", unsafe_allow_html=True)
         sub_id = st.selectbox("Subject", subject_dirs, key="eeg_sub")
         n_channels_show = st.slider("Channels to Display", 1, 19, 6, key="eeg_ch")
         time_start = st.number_input("Start time (s)", min_value=0.0, value=0.0, step=1.0, key="eeg_ts")
         time_end   = st.number_input("End time (s)",   min_value=1.0, value=8.0, step=1.0, key="eeg_te")
-        st.markdown("</div>", unsafe_allow_html=True)
 
     with viz_col:
         @st.cache_resource
@@ -880,15 +885,14 @@ elif page == "📊 EEG Analysis":
             total_dur = raw.times[-1]
             start_s   = max(0, time_start)
             end_s     = min(total_dur, time_end)
+            start_samp = int(start_s * sfreq)
+            end_samp   = int(end_s * sfreq)
+            data_slice = raw.get_data()[:, start_samp:end_samp]
 
             c1, c2, c3 = st.columns(3)
             c1.metric("EEG Channels",   len(raw.ch_names))
             c2.metric("Duration",       f"{total_dur:.1f} s")
             c3.metric("Sampling Rate",  f"{sfreq:.0f} Hz")
-
-            start_samp = int(start_s * sfreq)
-            end_samp   = int(end_s * sfreq)
-            data_slice = raw.get_data()[:, start_samp:end_samp]
 
             try:
                 import plotly.graph_objects as go
