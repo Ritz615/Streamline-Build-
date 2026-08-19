@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
@@ -53,7 +53,7 @@
         <a href="#" class="logo-btn" id="logo-btn" aria-label="Homepage">
           <img
             src="assets/logo.webp"
-            alt=""
+            alt="Brand Logo"
             width="52"
             height="52"
             class="logo-img"
@@ -73,7 +73,9 @@
         </nav>
 
         <!-- Desktop Sign In / Launch Button -->
-        <a href="#prediction" class="signin-btn desktop-signin" id="header-cta-btn">Launch App</a>
+        <a href="#prediction" class="signin-btn desktop-signin" id="header-cta-btn">
+          <i class="fa-solid fa-bolt"></i> Launch App
+        </a>
 
         <!-- Mobile Menu Toggle Button -->
         <button
@@ -149,7 +151,7 @@
           <!-- CTA Button -->
           <div class="cta-wrap">
             <button type="button" class="cta-btn anim" id="hero-get-started-btn" style="--d: 0.4s">
-              Get Started
+              <i class="fa-solid fa-play"></i> Get Started
             </button>
           </div>
         </main>
@@ -227,14 +229,14 @@
               </button>
             </div>
             <button type="button" class="back-hero-btn" id="back-hero-btn">
-              <i class="fa-solid fa-arrow-left"></i> Landing Page
+              <i class="fa-solid fa-arrow-left"></i> Back to Hero
             </button>
           </div>
 
           <!-- Academic Disclaimer Banner -->
           <div class="app-disclaimer">
             <i class="fa-solid fa-triangle-exclamation"></i>
-            <span><strong>Research Prototype Only:</strong> This system is an explainable educational AI prototype using public anonymized EEG data (OpenNeuro ds007169). It is <strong>NOT</strong> a medical or psychological diagnostic system.</span>
+            <span><strong>Academic Research Prototype:</strong> This platform demonstrates interpretable EEG cognitive load estimation using public anonymized data (OpenNeuro ds007169). It is <strong>NOT</strong> a medical or clinical diagnostic system.</span>
           </div>
 
           <!-- TAB 1: OVERVIEW -->
@@ -243,54 +245,54 @@
               <div class="glass-card stat-metric-card">
                 <div class="card-label">Dataset ID</div>
                 <div class="card-val" id="ov-dataset-id">ds007169</div>
-                <div class="card-sub">OpenNeuro Public EEG</div>
+                <div class="card-sub"><i class="fa-solid fa-database"></i> OpenNeuro Public EEG</div>
               </div>
               <div class="glass-card stat-metric-card">
                 <div class="card-label">Subjects</div>
                 <div class="card-val" id="ov-subjects">18</div>
-                <div class="card-sub">Preprocessed recordings</div>
+                <div class="card-sub"><i class="fa-solid fa-users"></i> Preprocessed subjects</div>
               </div>
               <div class="glass-card stat-metric-card">
                 <div class="card-label">EEG Channels</div>
                 <div class="card-val" id="ov-channels">19</div>
-                <div class="card-sub">10–20 Montage @ 250 Hz</div>
+                <div class="card-sub"><i class="fa-solid fa-network-wired"></i> 10–20 Montage @ 250 Hz</div>
               </div>
               <div class="glass-card stat-metric-card">
                 <div class="card-label">Extracted Windows</div>
                 <div class="card-val" id="ov-windows">1,046</div>
-                <div class="card-sub">4s sliding segments</div>
+                <div class="card-sub"><i class="fa-solid fa-layer-group"></i> 4s sliding segments</div>
               </div>
             </div>
 
             <div class="overview-split-row">
               <div class="glass-card overview-card">
                 <div class="section-title-wrap">
-                  <span class="badge-dot-matrix">PIPELINE ARCHITECTURE</span>
-                  <h3>Signal to Decision Flow</h3>
+                  <span class="badge-dot-matrix">END-TO-END METHODOLOGY</span>
+                  <h3>Signal to Decision Pipeline</h3>
                 </div>
                 <div class="pipeline-steps-list">
                   <div class="pipe-step">
                     <span class="step-num">01</span>
-                    <div><strong>Raw EEG Ingestion</strong>: 18 subjects in BrainVision format.</div>
+                    <div><strong>Raw EEG Ingestion</strong>: 18 subjects in BrainVision format (`.vhdr`, `.eeg`).</div>
                   </div>
                   <div class="pipe-step">
                     <span class="step-num">02</span>
-                    <div><strong>Preprocessing</strong>: 1–40 Hz bandpass, 50 Hz notch, average reference.</div>
+                    <div><strong>Preprocessing</strong>: 1–40 Hz bandpass filter, 50 Hz notch, average reference.</div>
                   </div>
                   <div class="pipe-step">
                     <span class="step-num">03</span>
-                    <div><strong>Feature Extraction</strong>: Theta/Alpha/Beta powers, TAR, TBR, BAR, Entropies.</div>
+                    <div><strong>Segmentation & Features</strong>: 4s sliding windows (2s overlap), 17 spectral & entropy features.</div>
                   </div>
                   <div class="pipe-step">
                     <span class="step-num">04</span>
-                    <div><strong>Fuzzy Inference & RF</strong>: 13 Mamdani rules + 100-tree RF baseline.</div>
+                    <div><strong>Fuzzy Inference & RF</strong>: 13 transparent Mamdani rules + 100-tree Random Forest baseline.</div>
                   </div>
                 </div>
               </div>
 
               <div class="glass-card overview-card">
                 <div class="section-title-wrap">
-                  <span class="badge-dot-matrix">5-FOLD SUBJECT-WISE BENCHMARK</span>
+                  <span class="badge-dot-matrix">SUBJECT-WISE BENCHMARK</span>
                   <h3>Model Performance Summary</h3>
                 </div>
                 <table class="styled-table" id="ov-metrics-table">
@@ -317,7 +319,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="table-note">*Evaluated via strict StratifiedGroupKFold subject-wise cross-validation (zero data leakage).</div>
+                <div class="table-note">*Evaluated via strict 5-fold StratifiedGroupKFold subject-wise cross-validation (zero data leakage).</div>
               </div>
             </div>
           </div>
@@ -327,11 +329,11 @@
             <div class="glass-card">
               <div class="signals-header-controls">
                 <div>
-                  <span class="badge-dot-matrix">LIVE SIGNAL VIEWER</span>
-                  <h3>Preprocessed Multi-Channel EEG Signals</h3>
+                  <span class="badge-dot-matrix">MULTI-CHANNEL SIGNAL VIEWER</span>
+                  <h3>Preprocessed EEG Waveforms & Power Spectrum</h3>
                 </div>
                 <div class="signals-controls-group">
-                  <label for="signal-subject-select">Subject:</label>
+                  <label for="signal-subject-select"><i class="fa-solid fa-user"></i> Subject:</label>
                   <select id="signal-subject-select" class="styled-select">
                     <option value="sub-001">sub-001</option>
                     <option value="sub-002">sub-002</option>
@@ -339,43 +341,75 @@
                     <option value="sub-004">sub-004</option>
                     <option value="sub-005">sub-005</option>
                   </select>
-                  <label for="signal-time-slider">Time:</label>
-                  <input type="range" id="signal-time-slider" min="0" max="60" step="2" value="0" />
-                  <span id="signal-time-val" class="pill-badge">0.0s – 4.0s</span>
+
+                  <label for="signal-gain-select"><i class="fa-solid fa-up-down"></i> Gain:</label>
+                  <select id="signal-gain-select" class="styled-select">
+                    <option value="0.5">0.5x</option>
+                    <option value="1.0" selected>1.0x</option>
+                    <option value="2.0">2.0x</option>
+                    <option value="4.0">4.0x</option>
+                  </select>
+
+                  <button type="button" class="styled-btn" id="btn-play-signal">
+                    <i class="fa-solid fa-play" id="play-icon"></i> <span id="play-text">Sweep</span>
+                  </button>
+
                   <button type="button" class="styled-btn" id="btn-load-signal">
-                    <i class="fa-solid fa-rotate"></i> Load Signal
+                    <i class="fa-solid fa-rotate"></i> Reload
                   </button>
                 </div>
               </div>
 
-              <!-- Multi-channel Waveform Canvas -->
+              <!-- Time Slider Control -->
+              <div class="signal-slider-row">
+                <span class="slider-label">Timeline Offset:</span>
+                <input type="range" id="signal-time-slider" min="0" max="60" step="1" value="0" />
+                <span id="signal-time-val" class="pill-badge">0.0s – 4.0s</span>
+              </div>
+
+              <!-- High-Definition Multi-channel Waveform Canvas -->
               <div class="waveform-container">
-                <canvas id="waveform-canvas" width="900" height="320"></canvas>
+                <canvas id="waveform-canvas" width="940" height="340"></canvas>
               </div>
 
               <!-- PSD Band Power Decomposition -->
               <div class="psd-section-row">
                 <div class="psd-box">
-                  <h4>Spectral Band Power Breakdown</h4>
+                  <div class="psd-header">
+                    <h4><i class="fa-solid fa-chart-pie"></i> Spectral Band Power Distribution (Welch PSD)</h4>
+                    <span class="badge-dot-matrix">1–30 Hz</span>
+                  </div>
                   <div class="band-bars-grid">
                     <div class="band-bar-item">
-                      <span class="band-name">Delta (1–4 Hz)</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-delta" style="width: 25%;"></div></div>
+                      <div class="band-title-row">
+                        <span class="band-dot" style="background:#60a5fa;"></span>
+                        <span class="band-name">Delta (1–4 Hz)</span>
+                      </div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-delta" style="width: 25%; background:#60a5fa;"></div></div>
                       <span class="band-pct" id="pct-delta">25.0%</span>
                     </div>
                     <div class="band-bar-item">
-                      <span class="band-name">Theta (4–8 Hz)</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-theta" style="width: 30%;"></div></div>
+                      <div class="band-title-row">
+                        <span class="band-dot" style="background:#34d399;"></span>
+                        <span class="band-name">Theta (4–8 Hz)</span>
+                      </div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-theta" style="width: 30%; background:#34d399;"></div></div>
                       <span class="band-pct" id="pct-theta">30.0%</span>
                     </div>
                     <div class="band-bar-item">
-                      <span class="band-name">Alpha (8–13 Hz)</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-alpha" style="width: 32%;"></div></div>
+                      <div class="band-title-row">
+                        <span class="band-dot" style="background:#facc15;"></span>
+                        <span class="band-name">Alpha (8–13 Hz)</span>
+                      </div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-alpha" style="width: 32%; background:#facc15;"></div></div>
                       <span class="band-pct" id="pct-alpha">32.0%</span>
                     </div>
                     <div class="band-bar-item">
-                      <span class="band-name">Beta (13–30 Hz)</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-beta" style="width: 13%;"></div></div>
+                      <div class="band-title-row">
+                        <span class="band-dot" style="background:#f87171;"></span>
+                        <span class="band-name">Beta (13–30 Hz)</span>
+                      </div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-beta" style="width: 13%; background:#f87171;"></div></div>
                       <span class="band-pct" id="pct-beta">13.0%</span>
                     </div>
                   </div>
@@ -389,11 +423,11 @@
             <div class="glass-card">
               <div class="signals-header-controls">
                 <div>
-                  <span class="badge-dot-matrix">FEATURE SPACE</span>
-                  <h3>Kruskal-Wallis ANOVA & Mutual Information</h3>
+                  <span class="badge-dot-matrix">FEATURE EXPLORER & ANOVA</span>
+                  <h3>Class Distributions & Mutual Information</h3>
                 </div>
                 <div class="signals-controls-group">
-                  <label for="feature-select-dropdown">Feature:</label>
+                  <label for="feature-select-dropdown"><i class="fa-solid fa-filter"></i> Select Feature:</label>
                   <select id="feature-select-dropdown" class="styled-select">
                     <option value="alpha_relative">alpha_relative</option>
                     <option value="theta_alpha_ratio">theta_alpha_ratio</option>
@@ -407,9 +441,19 @@
               </div>
 
               <div class="feature-analysis-grid">
-                <!-- Class Distribution Boxplot Card -->
+                <!-- Graphical Boxplot Card -->
                 <div class="feature-box-card">
-                  <h4>Feature Distribution across Cognitive Load Classes</h4>
+                  <div class="card-top-header">
+                    <h4><i class="fa-solid fa-chart-simple"></i> Graphical Boxplot Across Classes</h4>
+                    <span class="pill-badge" id="boxplot-feat-title">alpha_relative</span>
+                  </div>
+
+                  <!-- SVG Graphical Boxplot Visualizer -->
+                  <div class="svg-boxplot-wrapper">
+                    <svg id="svg-boxplot" width="100%" height="220" viewBox="0 0 480 220"></svg>
+                  </div>
+
+                  <!-- Numerical Metrics Row -->
                   <div class="boxplot-container" id="boxplot-display">
                     <div class="box-stat-col" id="box-low">
                       <div class="box-badge box-low-badge">LOW</div>
@@ -431,13 +475,12 @@
 
                 <!-- Top Feature Importance Ranking -->
                 <div class="feature-box-card">
-                  <h4>Top Ranked Predictive Features</h4>
+                  <div class="card-top-header">
+                    <h4><i class="fa-solid fa-ranking-star"></i> Feature Importance Ranking (Mutual Information)</h4>
+                    <span class="pill-badge">Top 5</span>
+                  </div>
                   <div class="importance-list" id="importance-list-container">
-                    <div class="imp-item"><span>alpha_relative</span><span class="imp-score">MI: 0.0482</span></div>
-                    <div class="imp-item"><span>theta_alpha_ratio</span><span class="imp-score">MI: 0.0415</span></div>
-                    <div class="imp-item"><span>beta_alpha_ratio</span><span class="imp-score">MI: 0.0398</span></div>
-                    <div class="imp-item"><span>theta_relative</span><span class="imp-score">MI: 0.0354</span></div>
-                    <div class="imp-item"><span>alpha_power</span><span class="imp-score">MI: 0.0310</span></div>
+                    <!-- Populated dynamically via JS -->
                   </div>
                 </div>
               </div>
@@ -448,8 +491,8 @@
           <div class="app-tab-content" id="tab-prediction">
             <div class="glass-card">
               <div class="section-title-wrap">
-                <span class="badge-dot-matrix">DUAL-MODEL PREDICTION ENGINE</span>
-                <h3>Live Cognitive Load Inference & Fuzzy Explanation</h3>
+                <span class="badge-dot-matrix">DUAL-MODEL INFERENCE ENGINE</span>
+                <h3>Cognitive Load Classification & Linguistic Explanation</h3>
               </div>
 
               <!-- Mode Switcher -->
@@ -466,9 +509,7 @@
                 <!-- Dataset Sample Picker Controls -->
                 <div class="dataset-picker-controls" id="dataset-picker-controls">
                   <select id="dataset-window-select" class="styled-select">
-                    <option value="sub-001_0">sub-001 — Window 0 (Label: LOW)</option>
-                    <option value="sub-002_14">sub-002 — Window 14 (Label: MODERATE)</option>
-                    <option value="sub-003_28">sub-003 — Window 28 (Label: HIGH)</option>
+                    <!-- Loaded dynamically -->
                   </select>
                 </div>
               </div>
@@ -477,21 +518,21 @@
               <div class="manual-sliders-grid" id="manual-sliders-grid" hidden>
                 <div class="slider-group">
                   <div class="slider-label-row">
-                    <label for="sl-alpha">alpha_relative</label>
+                    <label for="sl-alpha">alpha_relative (Parietal Alpha)</label>
                     <span class="slider-val" id="sl-val-alpha">0.28</span>
                   </div>
                   <input type="range" id="sl-alpha" min="0.05" max="0.60" step="0.01" value="0.28" />
                 </div>
                 <div class="slider-group">
                   <div class="slider-label-row">
-                    <label for="sl-tar">theta_alpha_ratio</label>
+                    <label for="sl-tar">theta_alpha_ratio (TAR)</label>
                     <span class="slider-val" id="sl-val-tar">1.40</span>
                   </div>
                   <input type="range" id="sl-tar" min="0.20" max="3.50" step="0.05" value="1.40" />
                 </div>
                 <div class="slider-group">
                   <div class="slider-label-row">
-                    <label for="sl-bar">beta_alpha_ratio</label>
+                    <label for="sl-bar">beta_alpha_ratio (BAR)</label>
                     <span class="slider-val" id="sl-val-bar">1.30</span>
                   </div>
                   <input type="range" id="sl-bar" min="0.20" max="3.50" step="0.05" value="1.30" />
@@ -517,24 +558,36 @@
                 <!-- Fuzzy Mamdani Output Card -->
                 <div class="glass-card pred-result-card" id="card-fuzzy-result">
                   <div class="pred-card-header">
-                    <span class="badge-dot-matrix">100% EXPLAINABLE</span>
-                    <h4>Fuzzy Mamdani Classifier</h4>
+                    <div>
+                      <span class="badge-dot-matrix">100% EXPLAINABLE WHITE-BOX</span>
+                      <h4>Fuzzy Mamdani Classifier</h4>
+                    </div>
+                    <span class="pill-badge" id="fuzzy-score-pill">Score: 51.4</span>
                   </div>
+
+                  <!-- Radial Speedometer Gauge -->
+                  <div class="gauge-container">
+                    <svg id="fuzzy-gauge-svg" width="160" height="100" viewBox="0 0 160 100">
+                      <path d="M 20 85 A 60 60 0 0 1 140 85" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
+                      <path id="gauge-arc" d="M 20 85 A 60 60 0 0 1 140 85" fill="none" stroke="#f6d86d" stroke-width="12" stroke-linecap="round" stroke-dasharray="188.5" stroke-dashoffset="94.2"/>
+                      <text x="80" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="22" fill="#ffffff" id="gauge-score-text">51.4</text>
+                    </svg>
+                  </div>
+
                   <div class="pred-class-banner class-MODERATE" id="fuzzy-class-banner">MODERATE</div>
                   <div class="pred-metrics-row">
-                    <div>Fuzzy Score: <strong id="fuzzy-score-val">51.4 / 100</strong></div>
                     <div>Confidence: <strong id="fuzzy-conf-val">86.2%</strong></div>
+                    <div>True Label: <strong id="true-label-val">MODERATE</strong></div>
                   </div>
 
                   <!-- Memberships Breakdown -->
                   <div class="memberships-list" id="fuzzy-memberships-list">
-                    <div class="mem-item"><strong>alpha_relative</strong>: LOW=0.08, MED=0.88, HIGH=0.04 → <span>MEDIUM</span></div>
-                    <div class="mem-item"><strong>theta_alpha_ratio</strong>: LOW=0.12, MED=0.82, HIGH=0.06 → <span>MEDIUM</span></div>
+                    <!-- Populated via JS -->
                   </div>
 
                   <!-- Activated Rules Box -->
                   <div class="activated-rules-box" id="fuzzy-rules-box">
-                    <div class="act-rule-title"><i class="fa-solid fa-code-fork"></i> Activated Linguistic Rules:</div>
+                    <div class="act-rule-title"><i class="fa-solid fa-code-fork"></i> Activated Linguistic Rule:</div>
                     <div class="act-rule-item" id="act-rule-text">Rule 04 (strength=0.82): IF Alpha is Medium AND Theta/Alpha is Medium THEN Workload is MODERATE</div>
                   </div>
                 </div>
@@ -542,35 +595,45 @@
                 <!-- Random Forest Baseline Output Card -->
                 <div class="glass-card pred-result-card" id="card-rf-result">
                   <div class="pred-card-header">
-                    <span class="badge-dot-matrix">ENSEMBLE BASELINE</span>
-                    <h4>Random Forest Classifier</h4>
+                    <div>
+                      <span class="badge-dot-matrix">STATISTICAL ENSEMBLE</span>
+                      <h4>Random Forest Classifier</h4>
+                    </div>
+                    <span class="pill-badge" id="rf-conf-pill">Conf: 74.5%</span>
                   </div>
+
+                  <!-- 2D Decision Space Scatterplot -->
+                  <div class="decision-map-box">
+                    <div class="decision-map-header">
+                      <span><i class="fa-solid fa-crosshairs"></i> 2D Decision Space Location</span>
+                      <span class="badge-dot-matrix">TAR vs Alpha</span>
+                    </div>
+                    <canvas id="decision-space-canvas" width="400" height="150"></canvas>
+                  </div>
+
                   <div class="pred-class-banner class-MODERATE" id="rf-class-banner">MODERATE</div>
-                  <div class="pred-metrics-row">
-                    <div>Model Confidence: <strong id="rf-conf-val">74.5%</strong></div>
-                  </div>
 
                   <!-- Probabilities -->
                   <div class="rf-prob-bars">
                     <div class="rf-prob-item">
                       <span>LOW</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="rf-bar-low" style="width: 15%;"></div></div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="rf-bar-low" style="width: 15%; background:#60a5fa;"></div></div>
                       <span id="rf-val-low">15.0%</span>
                     </div>
                     <div class="rf-prob-item">
                       <span>MODERATE</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="rf-bar-mod" style="width: 74%;"></div></div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="rf-bar-mod" style="width: 74%; background:#facc15;"></div></div>
                       <span id="rf-val-mod">74.5%</span>
                     </div>
                     <div class="rf-prob-item">
                       <span>HIGH</span>
-                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="rf-bar-high" style="width: 10%;"></div></div>
+                      <div class="progress-bar-bg"><div class="progress-bar-fill" id="rf-bar-high" style="width: 10%; background:#f87171;"></div></div>
                       <span id="rf-val-high">10.5%</span>
                     </div>
                   </div>
 
                   <div class="rf-note">
-                    <i class="fa-solid fa-info-circle"></i> Random Forest acts as a black-box baseline without linguistic rule explanations.
+                    <i class="fa-solid fa-circle-info"></i> Random Forest achieves higher accuracy (38.0%) as a black box, while Fuzzy Mamdani provides 100% linguistic interpretability.
                   </div>
                 </div>
               </div>
@@ -581,8 +644,8 @@
           <div class="app-tab-content" id="tab-models">
             <div class="glass-card">
               <div class="section-title-wrap">
-                <span class="badge-dot-matrix">CROSS-VALIDATION BENCHMARKS</span>
-                <h3>Fuzzy Classifier vs. Random Forest</h3>
+                <span class="badge-dot-matrix">BENCHMARK COMPARISON</span>
+                <h3>Fuzzy Mamdani Classifier vs. Random Forest</h3>
               </div>
 
               <table class="styled-table" id="full-model-comparison-table">
@@ -605,7 +668,7 @@
                     <td>0.333</td>
                     <td>0.333</td>
                     <td>0.154</td>
-                    <td><span class="pill-badge" style="background:#2E86AB; color:#fff;">100% Transparent</span></td>
+                    <td><span class="pill-badge" style="background:#1a4e6e; color:#7ecef4;">100% White-Box Rules</span></td>
                   </tr>
                   <tr>
                     <td><strong>Random Forest Baseline</strong></td>
@@ -621,13 +684,12 @@
 
               <!-- Fuzzy Rules Reference Table -->
               <div style="margin-top: 24px;">
-                <h4>Mamdani Fuzzy Linguistic Rules Database (13 Rules)</h4>
+                <div class="signals-header-controls">
+                  <h4><i class="fa-solid fa-list-ol"></i> Mamdani Fuzzy Linguistic Rules Database (13 Rules)</h4>
+                  <span class="badge-dot-matrix">Data-Driven Rules</span>
+                </div>
                 <div class="rules-table-container" id="fuzzy-rules-container">
-                  <div class="rule-row-item"><span class="rule-id">Rule 01</span><span>IF alpha_relative is LOW AND theta_alpha_ratio is HIGH THEN Workload is HIGH</span></div>
-                  <div class="rule-row-item"><span class="rule-id">Rule 02</span><span>IF alpha_relative is HIGH AND theta_alpha_ratio is LOW THEN Workload is LOW</span></div>
-                  <div class="rule-row-item"><span class="rule-id">Rule 03</span><span>IF alpha_relative is MEDIUM AND theta_alpha_ratio is MEDIUM THEN Workload is MODERATE</span></div>
-                  <div class="rule-row-item"><span class="rule-id">Rule 04</span><span>IF beta_alpha_ratio is HIGH THEN Workload is HIGH</span></div>
-                  <div class="rule-row-item"><span class="rule-id">Rule 05</span><span>IF spectral_entropy is HIGH THEN Workload is HIGH</span></div>
+                  <!-- All 13 Rules dynamically populated -->
                 </div>
               </div>
             </div>
@@ -639,11 +701,15 @@
               <div class="signals-header-controls">
                 <div>
                   <span class="badge-dot-matrix">SQLITE DATABASE LOGS</span>
-                  <h3>Historical Experiment Runs (data/eeg_project.db)</h3>
+                  <h3>Historical Experiment Runs (`data/eeg_project.db`)</h3>
                 </div>
-                <div>
+                <div class="signals-controls-group">
+                  <input type="text" id="history-search-input" class="styled-select" placeholder="Search runs..." />
+                  <button type="button" class="styled-btn" id="btn-export-history-csv">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV
+                  </button>
                   <button type="button" class="styled-btn" id="btn-refresh-history">
-                    <i class="fa-solid fa-arrows-rotate"></i> Refresh Database
+                    <i class="fa-solid fa-arrows-rotate"></i> Refresh
                   </button>
                 </div>
               </div>
@@ -675,30 +741,23 @@
           <div class="app-tab-content" id="tab-guide">
             <div class="glass-card">
               <div class="section-title-wrap">
-                <span class="badge-dot-matrix">SCIENTIFIC METHODOLOGY & VIVA PREPARATION</span>
-                <h3>Project Architecture & 20 Viva Talking Points</h3>
+                <span class="badge-dot-matrix">VIVA DEFENSE & ACADEMIC GUIDE</span>
+                <h3>Interactive Viva Questions & Methodological Flow</h3>
               </div>
 
-              <div class="guide-grid">
-                <div class="guide-item">
-                  <h4>1. Why use Fuzzy Logic for Cognitive Workload?</h4>
-                  <p>Unlike black-box deep learning, Fuzzy Mamdani inference provides 100% linguistic transparency (e.g., <em>"IF Alpha power is LOW AND Theta/Alpha Ratio is HIGH THEN Workload is HIGH"</em>), allowing clinicians and engineers to understand the exact physiological reasoning behind every classification.</p>
+              <div class="viva-filter-row">
+                <input type="text" id="viva-search-input" class="styled-select" placeholder="Search viva questions..." />
+                <div class="viva-tags-group">
+                  <button type="button" class="viva-tag-btn active" data-viva-tag="all">All (20)</button>
+                  <button type="button" class="viva-tag-btn" data-viva-tag="fuzzy">Fuzzy Logic</button>
+                  <button type="button" class="viva-tag-btn" data-viva-tag="cv">Cross-Validation</button>
+                  <button type="button" class="viva-tag-btn" data-viva-tag="eeg">EEG Signal</button>
+                  <button type="button" class="viva-tag-btn" data-viva-tag="ethics">Ethics</button>
                 </div>
+              </div>
 
-                <div class="guide-item">
-                  <h4>2. Why use Subject-Wise Cross-Validation (StratifiedGroupKFold)?</h4>
-                  <p>Random train/test splits leak individual subject brain signatures, causing artificial over-optimism (>90% accuracy). Subject-wise CV ensures subjects in the test set were never seen during training, validating true generalization across people.</p>
-                </div>
-
-                <div class="guide-item">
-                  <h4>3. What is the physiological role of Theta & Alpha Ratios?</h4>
-                  <p>Increased mental workload increases frontal theta power (working memory demand) and suppresses parietal alpha power (cortical activation/desynchronization). Thus, the Theta/Alpha Ratio (TAR) is a well-established physiological indicator of cognitive load.</p>
-                </div>
-
-                <div class="guide-item">
-                  <h4>4. How does the system handle signal artifacts?</h4>
-                  <p>Raw EEG signals are bandpass-filtered (1–40 Hz), notch-filtered at 50 Hz (power line interference), re-referenced to average, and windowed with amplitude thresholding (&plusmn;150 &mu;V) to eliminate ocular and myogenic artifacts.</p>
-                </div>
+              <div class="accordion-container" id="viva-accordion-container">
+                <!-- Populated via JS -->
               </div>
             </div>
           </div>
