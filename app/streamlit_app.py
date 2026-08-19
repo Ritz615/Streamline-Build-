@@ -1086,7 +1086,7 @@ License: CC0 (Public Domain)""")
 
     st.subheader("🎓 Viva Defense Talking Points (Quick Reference)")
     with st.expander("📖 View Key Viva Questions & Model Answers"):
-        st.markdown("""
+        st.markdown(r"""
 1. **Why use Fuzzy Logic instead of a Black-Box Neural Network?**
    - *Answer*: Fuzzy Mamdani inference provides 100% white-box transparency and linguistic rules (`IF Alpha is LOW AND Theta/Alpha is HIGH THEN Workload is HIGH`), making it accountable and trustworthy for human-in-the-loop neuroscience applications.
 2. **Why use Subject-Wise Cross-Validation (`StratifiedGroupKFold`)?**
