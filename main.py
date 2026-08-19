@@ -62,6 +62,7 @@ Disclaimer:
     parser.add_argument("--evaluate", action="store_true", help="Evaluate models")
     parser.add_argument("--report", action="store_true", help="Generate report")
     parser.add_argument("--status", action="store_true", help="Show project status")
+    parser.add_argument("--app", action="store_true", help="Launch Complete Unified Application (Landing Page + Dashboard)")
     parser.add_argument("--ui", action="store_true", help="Launch the Web Landing Page (port 8080)")
     parser.add_argument("--dashboard", action="store_true", help="Launch the Streamlit Research Dashboard (port 8501)")
     parser.add_argument("--config", type=str, default=None, help="Path to config.yaml")
@@ -131,6 +132,25 @@ def main():
         show_status(config)
         return
 
+    if args.app:
+        print("\n" + "=" * 60)
+        print("  LAUNCHING UNIFIED EEG COGNITIVE LOAD APPLICATION")
+        print("=" * 60)
+        print("  1. Landing Page:        http://localhost:8080")
+        print("  2. Research Dashboard:  http://localhost:8501")
+        print("=" * 60 + "\n")
+        import subprocess
+        p_web = subprocess.Popen([sys.executable, "-m", "http.server", "8080", "--directory", "web"])
+        p_app = subprocess.Popen([sys.executable, "-m", "streamlit", "run", "app/streamlit_app.py"])
+        try:
+            p_app.wait()
+        except KeyboardInterrupt:
+            print("\nShutting down servers...")
+        finally:
+            p_web.terminate()
+            p_app.terminate()
+        return
+
     if args.ui:
         print("\n" + "=" * 60)
         print("  LAUNCHING WEB LANDING PAGE ON http://localhost:8080")
@@ -152,6 +172,7 @@ def main():
                 args.features, args.train, args.evaluate, args.report]):
         print("\nNo action specified. Use --all to run the complete pipeline.")
         print("Options:")
+        print("  python main.py --app         Launch Complete Application (Landing + Dashboard)")
         print("  python main.py --ui          Launch Web Landing Page (http://localhost:8080)")
         print("  python main.py --dashboard   Launch Streamlit Dashboard (http://localhost:8501)")
         print("  python main.py --all         Run full end-to-end ML pipeline\n")

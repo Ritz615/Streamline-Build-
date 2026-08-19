@@ -499,3 +499,36 @@ def get_fuzzy_rules() -> list:
         )
         session.expunge_all()
         return rules
+
+
+def get_all_experiment_history_df():
+    """
+    Fetch all historical model runs from the database as a pandas DataFrame.
+    """
+    import pandas as pd
+    with get_session() as session:
+        runs = (
+            session.query(ModelRun)
+            .order_by(ModelRun.created_at.desc())
+            .all()
+        )
+        if not runs:
+            return None
+
+        records = []
+        for r in runs:
+            records.append({
+                "Run ID": r.id,
+                "Model": r.model_name,
+                "Version": r.model_version or "1.0",
+                "Accuracy": round(r.accuracy, 4) if r.accuracy is not None else None,
+                "F1 (Macro)": round(r.f1_score, 4) if r.f1_score is not None else None,
+                "Balanced Acc": round(r.balanced_accuracy, 4) if r.balanced_accuracy is not None else None,
+                "Precision": round(r.precision, 4) if r.precision is not None else None,
+                "Recall": round(r.recall, 4) if r.recall is not None else None,
+                "Folds": r.n_folds or 5,
+                "Test Samples": r.n_test_samples,
+                "Date & Time (UTC)": r.created_at.strftime("%Y-%m-%d %H:%M:%S") if r.created_at else "N/A",
+            })
+        return pd.DataFrame(records)
+

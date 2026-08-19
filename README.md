@@ -203,41 +203,85 @@ data/raw/ds007169/
 
 ---
 
+## Quick Start — Run Merged Application
+
+### 1. Launch the Complete Unified Application (Landing Page + Research Dashboard)
+```bash
+# Starts both the Landing Page (port 8080) and Streamlit Dashboard (port 8501)
+python main.py --app
+```
+- **Landing Page**: [http://localhost:8080](http://localhost:8080)
+- **Research Dashboard**: [http://localhost:8501](http://localhost:8501)
+
+### 2. Launch Individual Components
+```bash
+# Launch Landing Page only (port 8080)
+python main.py --ui
+
+# Launch Streamlit Research Dashboard only (port 8501)
+python main.py --dashboard
+
+# Run complete end-to-end ML & EEG pipeline
+python main.py --all
+
+# Run automated tests
+pytest tests/ -v
+```
+
+---
+
 ## Project Structure
 
 ```
 eeg-cognitive-load/
-├── app/streamlit_app.py        ← Web dashboard
+├── index.html                   ← Root Landing Page (Project 1)
+├── styles.css                   ← Exact Landing Page styling
+├── main.js                      ← Count-up & mobile menu logic
+├── assets/logo.webp             ← Circular brand logo
+├── fonts/                       ← Geist Pixel Circle font fallback
+├── web/                         ← Standalone web distribution folder
+│   ├── index.html
+│   ├── styles.css
+│   ├── main.js
+│   ├── assets/logo.webp
+│   └── fonts/GeistPixel-Circle.woff2
+├── app/
+│   └── streamlit_app.py         ← 7-page research dashboard (Project 2)
 ├── src/
-│   ├── config.py               ← Config loader
-│   ├── database.py             ← SQLite ORM
-│   ├── data_loader.py          ← Dataset loader
-│   ├── dataset_manager.py      ← Dataset registration
-│   ├── preprocessing.py        ← EEG preprocessing
-│   ├── segmentation.py         ← Window segmentation
-│   ├── feature_extraction.py   ← Feature computation
-│   ├── feature_selection.py    ← Feature ranking
-│   ├── fuzzy_classifier.py     ← Fuzzy inference system
-│   ├── random_forest.py        ← RF baseline model
-│   ├── evaluation.py           ← Metrics + confusion matrices
-│   ├── explainability.py       ← Human-readable explanations
-│   ├── visualization.py        ← EDA + plots
-│   └── pipeline.py             ← Pipeline orchestrator
-├── scripts/                    ← Standalone stage scripts
-├── tests/                      ← pytest test suite
+│   ├── config.py                ← Configuration loader
+│   ├── database.py              ← SQLite ORM & run history
+│   ├── data_loader.py           ← BIDS / BrainVision dataset loader
+│   ├── dataset_manager.py       ← Dataset verification
+│   ├── preprocessing.py         ← 1–40Hz bandpass, 50Hz notch, average ref
+│   ├── segmentation.py          ← 4s sliding windows with 2s overlap
+│   ├── feature_extraction.py    ← PSD band powers, ratios, entropies, stats
+│   ├── feature_selection.py     ← Kruskal-Wallis + Mutual Information
+│   ├── fuzzy_classifier.py      ← 13-rule Mamdani Fuzzy System (scikit-fuzzy)
+│   ├── random_forest.py         ← Random Forest baseline model
+│   ├── evaluation.py            ← 5-fold StratifiedGroupKFold cross-validation
+│   ├── explainability.py        ← Membership values & fired rule explanations
+│   ├── visualization.py         ← Signal waveforms, PSD, and EDA plots
+│   └── pipeline.py              ← End-to-end pipeline orchestrator
+├── scripts/                     ← Standalone stage execution scripts
+├── tests/                       ← Complete pytest test suite (43 passed)
 ├── data/
-│   ├── raw/                    ← Downloaded EEG (not in git)
-│   ├── processed/              ← Preprocessed .fif files
-│   ├── features/features.csv   ← Extracted features
-│   └── eeg_project.db          ← SQLite metadata DB
-├── models/                     ← Trained models
-├── results/                    ← Figures, metrics, reports
-├── config.yaml                 ← All configuration
-├── requirements.txt
-├── main.py                     ← CLI entry point
-├── README.md
-├── PROJECT_GUIDE.md
-└── VIVA_GUIDE.md
+│   ├── raw/                     ← OpenNeuro ds007169 (18 subjects)
+│   ├── processed/               ← Preprocessed .fif signal files
+│   ├── features/features.csv    ← Extracted feature dataset (1,046 windows)
+│   └── eeg_project.db           ← SQLite experiment metadata database
+├── models/
+│   ├── fuzzy/                   ← Trained Fuzzy Classifier (.joblib)
+│   └── random_forest/           ← Trained Random Forest model (.joblib)
+├── results/
+│   ├── figures/                 ← Confusion matrices, EDA plots, comparisons
+│   ├── metrics/                 ← model_comparison.csv, feature_importance.csv
+│   └── reports/                 ← final_experiment_report.md
+├── config.yaml                  ← Global system configuration
+├── requirements.txt             ← Python dependencies
+├── main.py                      ← Unified CLI entry point & launcher
+├── README.md                    ← Product documentation
+├── PROJECT_GUIDE.md             ← Academic architectural guide
+└── VIVA_GUIDE.md                ← 20 Viva defense questions & model answers
 ```
 
 ---

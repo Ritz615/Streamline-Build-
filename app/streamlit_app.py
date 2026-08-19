@@ -299,7 +299,8 @@ with st.sidebar:
     page = st.radio(
         "Navigation",
         ["🏠 Dashboard", "📊 EEG Analysis", "🔬 Feature Analysis",
-         "🧠 Cognitive Load Prediction", "📈 Model Comparison", "ℹ️ About"],
+         "🧠 Cognitive Load Prediction", "📈 Model Comparison",
+         "📜 Experiment History", "ℹ️ Methodology & Guide"],
         label_visibility="collapsed",
     )
 
@@ -890,23 +891,95 @@ elif page == "📈 Model Comparison":
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# PAGE 6: ABOUT
+# PAGE 6: EXPERIMENT HISTORY (SQLite Database)
 # ═══════════════════════════════════════════════════════════════════════════
-elif page == "ℹ️ About":
-    st.title("ℹ️ About This Project")
+elif page == "📜 Experiment History":
+    st.title("📜 Experiment History")
+    _disclaimer_banner()
+    st.markdown("---")
+
+    st.markdown("All model runs, preprocessing runs, and evaluation metrics recorded in the local **SQLite database** (`data/eeg_project.db`).")
+
+    try:
+        from src.database import get_all_experiment_history_df, init_db
+        init_db()
+        history_df = get_all_experiment_history_df()
+
+        if history_df is not None and not history_df.empty:
+            # Summary Metrics
+            c1, c2, c3, c4 = st.columns(4)
+            c1.metric("Total Recorded Runs", len(history_df))
+            c2.metric("Models Evaluated", history_df["Model"].nunique())
+            best_acc = history_df["Accuracy"].max()
+            best_f1 = history_df["F1 (Macro)"].max()
+            c3.metric("Peak Accuracy", f"{best_acc:.3f}" if best_acc else "N/A")
+            c4.metric("Peak F1 Macro", f"{best_f1:.3f}" if best_f1 else "N/A")
+
+            st.markdown("---")
+
+            # Filter controls
+            col_f1, col_f2 = st.columns([1, 2])
+            with col_f1:
+                model_filter = st.selectbox(
+                    "Filter by Model",
+                    ["All Models"] + sorted(history_df["Model"].unique().tolist())
+                )
+            with col_f2:
+                search_term = st.text_input("Search Runs", placeholder="Search by version or date...")
+
+            filtered_df = history_df.copy()
+            if model_filter != "All Models":
+                filtered_df = filtered_df[filtered_df["Model"] == model_filter]
+            if search_term:
+                filtered_df = filtered_df[
+                    filtered_df.astype(str).apply(lambda row: row.str.contains(search_term, case=False).any(), axis=1)
+                ]
+
+            st.subheader("Historical Model Runs")
+            st.dataframe(
+                filtered_df.style.format({
+                    "Accuracy": "{:.3f}",
+                    "F1 (Macro)": "{:.3f}",
+                    "Balanced Acc": "{:.3f}",
+                    "Precision": "{:.3f}",
+                    "Recall": "{:.3f}",
+                }),
+                use_container_width=True,
+                hide_index=True,
+            )
+
+            # Download CSV
+            csv = filtered_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Export Experiment History as CSV",
+                data=csv,
+                file_name="eeg_experiment_history.csv",
+                mime="text/csv",
+            )
+
+        else:
+            st.info("No experiment runs found in the database. Run the evaluation pipeline:\n```bash\npython main.py --evaluate\n```")
+
+    except Exception as e:
+        st.error(f"Could not load database history: {e}")
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# PAGE 7: METHODOLOGY & GUIDE
+# ═══════════════════════════════════════════════════════════════════════════
+elif page == "ℹ️ Methodology & Guide":
+    st.title("ℹ️ Methodology & Research Guide")
+    _disclaimer_banner()
+    st.markdown("---")
 
     st.error("""
-**⚠️ IMPORTANT DISCLAIMER**
+**⚠️ ETHICAL & SCIENTIFIC DISCLAIMER**
 
-This is an **academic research prototype** built for a BE (Bachelor of Engineering) final year project.
-
-- It is **NOT** a medical device
-- It is **NOT** a clinical diagnostic tool
-- It is **NOT** a psychological assessment system
-- It does **NOT** provide medical, clinical, or psychological advice
-- Results should **NOT** be used for any medical or clinical purpose
-
-All EEG data used is **public**, **anonymized**, and licensed under **CC0**.
+This system is a **cognitive-load research prototype and is not a medical or psychological diagnostic system.**
+- It is **NOT** a medical device, clinical diagnostic tool, or psychological assessment system.
+- It does **NOT** provide medical or psychiatric advice.
+- Results must **NOT** be used for any medical, clinical, or diagnostic purpose.
+All EEG data used is **public**, **anonymized**, and licensed under **CC0 (OpenNeuro ds007169)**.
 """)
 
     st.markdown("---")
@@ -1007,4 +1080,21 @@ License: CC0 (Public Domain)""")
 | Dashboard | Streamlit |
 | Database | SQLite + SQLAlchemy |
 | Configuration | PyYAML |
+""")
+
+    st.markdown("---")
+
+    st.subheader("🎓 Viva Defense Talking Points (Quick Reference)")
+    with st.expander("📖 View Key Viva Questions & Model Answers"):
+        st.markdown("""
+1. **Why use Fuzzy Logic instead of a Black-Box Neural Network?**
+   - *Answer*: Fuzzy Mamdani inference provides 100% white-box transparency and linguistic rules (`IF Alpha is LOW AND Theta/Alpha is HIGH THEN Workload is HIGH`), making it accountable and trustworthy for human-in-the-loop neuroscience applications.
+2. **Why use Subject-Wise Cross-Validation (`StratifiedGroupKFold`)?**
+   - *Answer*: Random train/test splits leak individual subject brain signatures, falsely inflating test accuracy to >90%. Subject-wise CV tests exclusively on subjects unseen during training, ensuring real-world generalization.
+3. **What is the physiological basis of Theta/Alpha Ratio (TAR)?**
+   - *Answer*: Cognitive workload and working memory demand elicit increased frontal theta power and suppressed parietal alpha power (cortical desynchronization). Higher TAR reflects higher mental workload.
+4. **How are artifacts handled during preprocessing?**
+   - *Answer*: Signals are filtered (1–40 Hz bandpass, 50 Hz notch), re-referenced to average, and windowed with amplitude thresholding ($\pm 150\,\mu\text{V}$) to eliminate ocular blinks and myogenic noise.
+5. **What are the limitations of this prototype?**
+   - *Answer*: This is an educational research prototype using task difficulty as an operational proxy for cognitive load. It is NOT a medical device.
 """)
