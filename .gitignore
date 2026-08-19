@@ -1,0 +1,87 @@
+# ============================================================
+# .gitignore — EEG Cognitive Load Classification Project
+# ============================================================
+
+# ---- Raw EEG data (large multi-GB, not tracked in git) ----
+data/raw/
+data/processed/
+*.eeg
+*.vhdr
+*.vmrk
+*.fif
+*.set
+*.edf
+*.bdf
+
+# ---- Keep SQLite database and logs ignored ----
+*.db
+*.log
+results/pipeline.log
+
+# ---- Python & Virtual Environment ----
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ---- Virtual environment ----
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ---- IDEs ----
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# ---- Logs ----
+*.log
+results/pipeline.log
+
+# ---- Generated result figures (large) ----
+results/figures/*.png
+results/figures/*.pdf
+results/figures/*.svg
+
+# ---- Temp files ----
+*.tmp
+*.temp
+.tmp/
+
+# ---- OS ----
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ---- Environment variables ----
+.env
+.env.*
+
+# ---- Keep empty directories in git ----
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/features/.gitkeep
+!models/fuzzy/.gitkeep
+!models/random_forest/.gitkeep
+!results/figures/.gitkeep
+!results/metrics/.gitkeep
+!results/predictions/.gitkeep
+!results/reports/.gitkeep

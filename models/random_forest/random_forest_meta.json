@@ -1,0 +1,48 @@
+{
+  "feature_names": [
+    "theta_power",
+    "alpha_power",
+    "beta_power",
+    "theta_relative",
+    "alpha_relative",
+    "beta_relative",
+    "theta_alpha_ratio",
+    "theta_beta_ratio",
+    "beta_alpha_ratio",
+    "mean",
+    "std",
+    "variance",
+    "rms",
+    "skewness",
+    "kurtosis",
+    "spectral_entropy",
+    "sample_entropy"
+  ],
+  "cv_results": [],
+  "model_params": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "class_weight": "balanced",
+    "criterion": "gini",
+    "max_depth": null,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 200,
+    "n_jobs": -1,
+    "oob_score": false,
+    "random_state": 42,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "class_names": [
+    "LOW",
+    "MODERATE",
+    "HIGH"
+  ]
+}

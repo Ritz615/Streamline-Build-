@@ -1,0 +1,269 @@
+# ============================================================
+# EEG Cognitive Load Classification — Master Configuration
+# ============================================================
+# All important parameters are centralized here.
+# Edit this file to change experimental settings.
+# DO NOT hard-code these values in source files.
+
+# ------------------------------------------------------------
+# Project metadata
+# ------------------------------------------------------------
+project:
+  name: "EEG Cognitive Load Classification"
+  version: "1.0.0"
+  description: "Research prototype for EEG-based fuzzy cognitive load classification"
+  disclaimer: >
+    This is a research prototype using a public anonymized EEG dataset.
+    It is NOT a medical device, NOT a diagnostic system, and NOT a
+    psychological assessment tool. Results are for research purposes only.
+
+# ------------------------------------------------------------
+# Dataset configuration
+# ------------------------------------------------------------
+dataset:
+  id: "ds007169"
+  name: "Cognitive Workload 5-level n-back"
+  source: "https://openneuro.org/datasets/ds007169"
+  doi: "doi:10.18112/openneuro.ds007169.v1.0.0"
+  license: "CC0"
+  version: "1.0.0"
+  description: "EEG recorded during n-back tasks at 4 difficulty levels. 18 subjects, 19 channels, 250 Hz."
+  subjects: 18
+  channels: 19
+  sampling_rate: 250
+  format: "BrainVision"   # .vhdr / .eeg / .vmrk
+  task: "nback"
+
+# ------------------------------------------------------------
+# Paths
+# ------------------------------------------------------------
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  features: "data/features"
+  models: "models"
+  results: "results"
+  figures: "results/figures"
+  metrics: "results/metrics"
+  reports: "results/reports"
+  predictions: "results/predictions"
+  database: "data/eeg_project.db"
+  feature_file: "data/features/features.csv"
+
+# ------------------------------------------------------------
+# Workload label mapping
+# ------------------------------------------------------------
+# IMPORTANT: This mapping is an OPERATIONAL RESEARCH CATEGORIZATION
+# derived from n-back task difficulty levels.
+# It is NOT a medically or psychologically validated cognitive load scale.
+# The dataset (ds007169) has NO explicit rest/baseline condition.
+# 1-back is used as the LOW workload reference.
+#
+# Configurable: change the mapping below to experiment with alternatives.
+# ------------------------------------------------------------
+label_mapping:
+  nback_1: "LOW"
+  nback_2: "MODERATE"
+  nback_3: "HIGH"
+  nback_4: "HIGH"
+  exclude_tutorial: true    # exclude tutorial trials (istutorial == True)
+  exclude_boundary: true    # exclude started/finished markers
+
+class_names:
+  - "LOW"
+  - "MODERATE"
+  - "HIGH"
+
+class_to_int:
+  LOW: 0
+  MODERATE: 1
+  HIGH: 2
+
+int_to_class:
+  0: "LOW"
+  1: "MODERATE"
+  2: "HIGH"
+
+# ------------------------------------------------------------
+# EEG Preprocessing
+# ------------------------------------------------------------
+preprocessing:
+  low_frequency: 1.0        # Band-pass low cutoff (Hz)
+  high_frequency: 40.0      # Band-pass high cutoff (Hz)
+  notch_frequency: 50.0     # Notch filter frequency (Hz)
+  reference: "average"      # EEG reference: "average" or "linked_ears"
+  artifact_threshold_uv: 150.0  # Amplitude threshold for artifact rejection (µV)
+  apply_ica: false          # ICA disabled in MVP (see PROJECT_GUIDE.md for rationale)
+  ica_n_components: 15
+  min_recording_seconds: 30  # Minimum usable recording length
+  version: "1.0"
+
+# ------------------------------------------------------------
+# EEG Channels
+# ------------------------------------------------------------
+channels:
+  all_eeg:
+    - Fp1
+    - Fp2
+    - F7
+    - F3
+    - Fz
+    - F4
+    - F8
+    - T3
+    - C3
+    - Cz
+    - C4
+    - T4
+    - T5
+    - P3
+    - Pz
+    - P4
+    - T6
+    - O1
+    - O2
+
+  # Regional groupings for cognitive load analysis
+  regions:
+    frontal:  [Fp1, Fp2, F7, F3, Fz, F4, F8]
+    central:  [C3, Cz, C4]
+    parietal: [P3, Pz, P4]
+    occipital: [O1, O2]
+    temporal: [T3, T4, T5, T6]
+
+# ------------------------------------------------------------
+# Segmentation (windowing)
+# ------------------------------------------------------------
+segmentation:
+  window_seconds: 4.0       # Epoch window length
+  overlap_seconds: 2.0      # Overlap between consecutive windows
+  min_windows_per_subject: 10  # Minimum windows to include a subject
+
+# ------------------------------------------------------------
+# Frequency bands
+# ------------------------------------------------------------
+bands:
+  delta:
+    low: 1.0
+    high: 4.0
+  theta:
+    low: 4.0
+    high: 8.0
+  alpha:
+    low: 8.0
+    high: 13.0
+  beta:
+    low: 13.0
+    high: 30.0
+  gamma:
+    low: 30.0
+    high: 40.0
+
+# Primary bands used for cognitive load analysis
+primary_bands:
+  - theta
+  - alpha
+  - beta
+
+# ------------------------------------------------------------
+# Feature extraction
+# ------------------------------------------------------------
+features:
+  version: "1.0"
+  # Band features computed
+  band_features:
+    - theta_power
+    - alpha_power
+    - beta_power
+    - theta_relative
+    - alpha_relative
+    - beta_relative
+    - theta_alpha_ratio
+    - theta_beta_ratio
+    - beta_alpha_ratio
+  # Statistical features
+  statistical_features:
+    - mean
+    - std
+    - variance
+    - rms
+    - skewness
+    - kurtosis
+  # Entropy features
+  entropy_features:
+    - spectral_entropy
+    - sample_entropy
+  # Sample entropy parameters
+  sample_entropy_m: 2
+  sample_entropy_r_factor: 0.2  # r = r_factor * std(signal)
+
+# ------------------------------------------------------------
+# Feature selection
+# ------------------------------------------------------------
+feature_selection:
+  method: "combined"   # "kruskal", "mutual_info", or "combined"
+  n_top_features: 5    # Number of features selected for fuzzy classifier
+  random_state: 42
+
+# ------------------------------------------------------------
+# Classification
+# ------------------------------------------------------------
+classification:
+  classes:
+    - LOW
+    - MODERATE
+    - HIGH
+  n_classes: 3
+
+# Subject-wise cross-validation (MANDATORY — prevents data leakage)
+validation:
+  method: "StratifiedGroupKFold"
+  n_splits: 5
+  random_state: 42
+  # Subject IDs are used as groups to prevent leakage
+
+# ------------------------------------------------------------
+# Random Forest model
+# ------------------------------------------------------------
+models:
+  random_forest:
+    n_estimators: 200
+    max_depth: null         # None = unlimited
+    min_samples_split: 2
+    min_samples_leaf: 1
+    class_weight: "balanced"
+    random_state: 42
+    n_jobs: -1              # Use all available CPU cores
+    version: "1.0"
+
+  fuzzy:
+    version: "1.0"
+    n_rules: 15
+    # Membership function ranges are tuned from data during training
+    # These defaults are overridden after feature analysis
+    defuzzification: "centroid"
+
+# ------------------------------------------------------------
+# Streamlit application
+# ------------------------------------------------------------
+application:
+  title: "EEG Cognitive Load Research Dashboard"
+  max_upload_size_mb: 500
+  theme: "dark"
+  port: 8501
+
+# ------------------------------------------------------------
+# Logging
+# ------------------------------------------------------------
+logging:
+  level: "INFO"
+  format: "[%(levelname)s] %(asctime)s - %(name)s - %(message)s"
+  date_format: "%Y-%m-%d %H:%M:%S"
+  log_file: "results/pipeline.log"
+
+# ------------------------------------------------------------
+# Reproducibility
+# ------------------------------------------------------------
+reproducibility:
+  random_seed: 42
+  numpy_seed: 42
